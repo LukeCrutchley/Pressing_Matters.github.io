@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+    <h2>Press profiles</h2>
+    <ul>
+        {% for listing in listings %}
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="col-4" style="text-align: center;">
+                <img style="height: 300px;" src="{{listing.image}}" alt="No image available">
+                </div>
+                <div class="col-8"> 
+                    <div class="card-block px-2">
+                        <h5 class="card-title" style="font-size: 25px; font-weight: bold;">{{listing.title}}</h5>
+                        <p class="card-text">{{listing.description}}</p>
+                        <a method="GET" class="btn btn-primary" href="/{{listing.id}}" name="listing">View item</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
+{% endblock %}

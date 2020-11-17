@@ -1,0 +1,87 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block title %}{{title}}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row" style="padding: 10px;">
+            <h1 class="card-title">{{title}}</h1>
+        </div>    
+        <div class="row">
+            <div class="col-6" style="text-align: center;">
+                <img class="col-12" style="height: auto; width: auto;" src="{{image}}" alt="No image available">
+            </div>    
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="form-control-plaintext">Description: {{ description }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                            <p class="form-control">£{{current_bid}}</p>
+                    </div>
+                    <div class="col-auto">
+                        {% if winner is False %}
+                        <form class="form-inline" method="POST">
+                            {% csrf_token %}
+                            {{make_bid}}
+                            <input class="btn btn-primary mb-2" type="submit" value="Make bid" name="bid">
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <p class="form-control">{{watchlist_message}}</p>
+                    </div>
+                    <div class="col-3">
+                        <form method="POST" action="{% url 'listing' listing_id %}">
+                            {% csrf_token %}
+                            <input class="btn btn-primary" type="submit" value="{{watchlist_edit}}" name="Watchlist">
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto">
+                        <p class="form-control">Auction is {{status}}</p>
+                    </div>
+                    <div class="col-auto">    
+                        {% if owner is True %}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-primary" type="submit" name="endauction" value="Close auction">
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="col-auto">
+                        {% if winner is True %}
+                        <p class="form-control">Congatulations you Won this Auction</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card">
+        <form method="POST">
+            {% csrf_token %}
+            {{new_comment}}
+            <input class="btn btn-primary" type="submit" name="comment" value="Post comment" >
+        </form>
+    </div>
+    <h2>Comments</h2>
+    <ul>
+        {% for item in comments %}
+        <div class="card">
+            <div class="row no-gutters">
+                <div class="card-block px-2">
+                    <h5 class="card-title" style="font-size: 25px; font-weight: bold;">{{item.user}}</h5>
+                    <p class="card-text">{{item.comment}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
+{% endblock %}

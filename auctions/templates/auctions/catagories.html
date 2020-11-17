@@ -1,0 +1,12 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Catagories</h1>
+    <ul>
+        {% for option in options %}
+        <div class="card">
+            <a method="GET" class="form-control" href="/catagory/{{option}}" name="Catagories">{{option}}</a>
+        </div>
+        {% endfor %}
+    </ul>
+{% endblock %}

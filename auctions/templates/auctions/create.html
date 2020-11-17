@@ -1,0 +1,13 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Share a press profile</h1>
+        <form action="{% url 'create' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+            {{ create }}
+            <br>
+            <input type="submit" value="Upload listing" class="form-control">
+            </div>
+        </form>
+{% endblock %}
